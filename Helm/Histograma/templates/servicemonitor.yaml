@@ -4,6 +4,7 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "histograma.fullname" . }}
   labels:
+    {{- include "histograma.labels" . | nindent 4 }}
     release: prometheus
 spec:
   selector:

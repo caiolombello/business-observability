@@ -35,6 +35,7 @@ Common labels
 */}}
 {{- define "histograma.labels" -}}
 helm.sh/chart: {{ include "histograma.chart" . }}
+app: {{ include "histograma.name" . }}
 {{ include "histograma.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}

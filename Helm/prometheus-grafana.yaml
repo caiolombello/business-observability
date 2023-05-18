@@ -13,3 +13,10 @@ prometheusOperator:
 
 prometheus:
   enabled: true
+
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: "histograma"
+        static_configs:
+          - targets: ["histograma.default.svc.cluster.local"]  
+
