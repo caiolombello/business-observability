@@ -1,0 +1,15 @@
+fullnameOverride: prometheus
+
+alertmanager:
+  enabled: false
+
+grafana:
+  enabled: true
+  defaultDashboardsEnabled: false
+  adminPassword: Vertigo123
+
+prometheusOperator:
+  enabled: true
+
+prometheus:
+  enabled: true

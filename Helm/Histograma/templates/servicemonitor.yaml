@@ -1,0 +1,16 @@
+{{- if .Values.serviceMonitor.create -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "histograma.fullname" . }}
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      {{- include "histograma.selectorLabels" . | nindent 6 }}
+  endpoints:
+  - port: "80"
+    interval: 15s
+    path: /metrics
+{{- end }}
