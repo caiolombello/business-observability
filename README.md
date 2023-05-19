@@ -14,7 +14,7 @@ Este histograma mostra a distribuição dos tempos de compra. Ele pode ajudar a 
 
 **Painel:** Um gráfico de histograma mostrando a contagem de compras em cada intervalo de tempo. Este gráfico pode ser atualizado em tempo real à medida que novos dados são coletados.
 
-![Painel Histograma de Compras](Dashboards/histograma.jpng)
+![Painel Histograma de Compras](Dashboards/histograma.jpg)
 
 **Necessidade:** Este painel fornece uma visão rápida e visual da distribuição dos tempos de compra. Ele pode ajudar a identificar tendências e outliers, informando decisões sobre onde focar os esforços de otimização.
 
