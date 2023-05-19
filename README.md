@@ -1,4 +1,4 @@
-# Projeto Histograma
+# [Apresentação Observabilidade de Negócio](https://docs.google.com/presentation/d/1YMQML8Ydc06uwHRLouDuDXnjS6Z6mzK4/edit#slide=id.p1)
 
 Este projeto é um exemplo simples de como criar e visualizar um histograma usando o pacote Node.js `prom-client` para coletar métricas de eventos de compra simulados.
 
