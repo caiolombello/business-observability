@@ -10,8 +10,13 @@ COPY package*.json ./
 # Install any needed packages
 RUN npm install
 
+RUN npm install -g typescript
+
 # Copy the rest of your app's source code from your host to your image filesystem.
-COPY . .
+COPY src/ .
+
+# Build app
+RUN tsc server.ts
 
 # Make port 3000 available to the world outside this container
 EXPOSE 3000
