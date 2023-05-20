@@ -1,22 +1,32 @@
-1. Get the application URL by running these commands:
+1. Para acessar a aplicação, execute os seguintes comandos:
+
 {{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+  # Se o Ingress estiver habilitado, imprima o URL para cada host e caminho definido no Ingress
+  {{- range $host := .Values.ingress.hosts }}
+    {{- range .paths }}
+    http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
+    {{- end }}
   {{- end }}
-{{- end }}
 {{- else if contains "NodePort" .Values.service.type }}
+  # Se o tipo de serviço for NodePort, imprima o IP do nó e a porta do nó
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "ShopMetrics360.fullname" . }})
   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   echo http://$NODE_IP:$NODE_PORT
 {{- else if contains "LoadBalancer" .Values.service.type }}
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "ShopMetrics360.fullname" . }}'
+  # Se o tipo de serviço for LoadBalancer, imprima o IP do LoadBalancer
+  # Nota: Pode levar alguns minutos para que o IP do LoadBalancer esteja disponível.
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "ShopMetrics360.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
   echo http://$SERVICE_IP:{{ .Values.service.port }}
 {{- else if contains "ClusterIP" .Values.service.type }}
+  # Se o tipo de serviço for ClusterIP, imprima as instruções para fazer o port-forward para o pod
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "ShopMetrics360.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
+  echo "Visite http://127.0.0.1:8080 para usar sua aplicação"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
 {{- end }}
+
+2. Endpoints da Aplicação:
+
+- `/`: Este endpoint atualiza o histograma e o contador de compras. Cada requisição GET para este endpoint gera um novo conjunto de dados de exemplo e atualiza as métricas com base nesses dados.
+- `/metrics`: Este endpoint expõe as métricas do Prometheus para coleta. Ele retorna as métricas atuais da aplicação em um formato que o Prometheus pode entender.
+- `/health`: Este é o endpoint de verificação de saúde da aplicação. Ele retorna um status HTTP 200 e a mensagem "OK" se a aplicação estiver funcionando corretamente.

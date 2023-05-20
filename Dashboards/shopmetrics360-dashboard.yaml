@@ -73,7 +73,7 @@ data:
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Distribuição dos tempos de compra",
+          "description": "Este painel apresenta um histograma dos tempos de compra dos clientes. Cada linha no gráfico representa um percentil específico dos tempos de compra. \n\n- A linha do percentil 50 (mediana) mostra o tempo de compra em que metade dos clientes conclui suas compras.\n- A linha do percentil 75 mostra o tempo de compra em que 75% dos clientes conclui suas compras.\n- A linha do percentil 90 mostra o tempo de compra em que 90% dos clientes conclui suas compras.\n- A linha do percentil 95 mostra o tempo de compra em que 95% dos clientes conclui suas compras.\n- A linha do percentil 99 mostra o tempo de compra em que 99% dos clientes conclui suas compras.\n\nAs linhas adicionais (60, 70, 80, 85 percentis) fornecem uma visão mais detalhada da distribuição dos tempos de compra.\n\nEste histograma pode ajudar a identificar tendências e outliers nos tempos de compra, informando decisões sobre onde focar os esforços de otimização.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -106,7 +106,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "histogram_quantile(0.75, sum(rate(purchase_time_bucket[3600s])) by (le))"
+                  "options": "histogram_quantile(0.75, sum(rate(tempo_compra_bucket[3600s])) by (le))"
                 },
                 "properties": [
                   {
@@ -118,7 +118,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "histogram_quantile(0.90, sum(rate(purchase_time_bucket[3600s])) by (le))"
+                  "options": "histogram_quantile(0.90, sum(rate(tempo_compra_bucket[3600s])) by (le))"
                 },
                 "properties": [
                   {
@@ -130,7 +130,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "histogram_quantile(0.95, sum(rate(purchase_time_bucket[3600s])) by (le))"
+                  "options": "histogram_quantile(0.95, sum(rate(tempo_compra_bucket[3600s])) by (le))"
                 },
                 "properties": [
                   {
@@ -142,7 +142,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "histogram_quantile(0.99, sum(rate(purchase_time_bucket[3600s])) by (le))"
+                  "options": "histogram_quantile(0.99, sum(rate(tempo_compra_bucket[3600s])) by (le))"
                 },
                 "properties": [
                   {
@@ -176,7 +176,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum(rate(purchase_time_bucket[$__range])) by (le))",
+              "expr": "histogram_quantile(0.50, sum(rate(tempo_compra_bucket[$__range])) by (le))",
               "format": "time_series",
               "interval": "",
               "intervalFactor": 1,
@@ -190,7 +190,37 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.75, sum(rate(purchase_time_bucket[$__range])) by (le))",
+              "expr": "histogram_quantile(0.60, sum(rate(tempo_compra_bucket[$__range])) by (le))",
+              "format": "time_series",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "{{le}}",
+              "range": true,
+              "refId": "60º"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(0.70, sum(rate(tempo_compra_bucket[$__range])) by (le))",
+              "format": "time_series",
+              "hide": false,
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "{{le}}",
+              "range": true,
+              "refId": "70º"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(0.75, sum(rate(tempo_compra_bucket[$__range])) by (le))",
               "hide": false,
               "legendFormat": "__auto",
               "range": true,
@@ -202,7 +232,31 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum(rate(purchase_time_bucket[$__range])) by (le))",
+              "expr": "histogram_quantile(0.80, sum(rate(tempo_compra_bucket[$__range])) by (le))",
+              "hide": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "80º"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(0.85, sum(rate(tempo_compra_bucket[$__range])) by (le))",
+              "hide": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "85º"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(0.90, sum(rate(tempo_compra_bucket[$__range])) by (le))",
               "hide": false,
               "legendFormat": "__auto",
               "range": true,
@@ -214,7 +268,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.95, sum(rate(purchase_time_bucket[$__range])) by (le))",
+              "expr": "histogram_quantile(0.95, sum(rate(tempo_compra_bucket[$__range])) by (le))",
               "hide": false,
               "legendFormat": "__auto",
               "range": true,
@@ -226,7 +280,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum(rate(purchase_time_bucket[$__range])) by (le))",
+              "expr": "histogram_quantile(0.99, sum(rate(tempo_compra_bucket[$__range])) by (le))",
               "hide": false,
               "legendFormat": "__auto",
               "range": true,
@@ -297,7 +351,7 @@ data:
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "total_purchases{instance=\"shopmetrics360.default.svc.cluster.local:80\", job=\"shopmetrics360\"}"
+                  "options": "total_compras{instance=\"shopmetrics360.default.svc.cluster.local:80\", job=\"shopmetrics360\"}"
                 },
                 "properties": [
                   {
@@ -335,7 +389,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "total_purchases",
+              "expr": "total_compras",
               "format": "time_series",
               "intervalFactor": 1,
               "range": true,
@@ -346,12 +400,123 @@ data:
           "type": "timeseries"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "description": "Taxa de compras em tempo real, calculada como o número de compras por segundo",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "por segundo"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "{instance=\"shopmetrics360.default.svc.cluster.local:80\", job=\"shopmetrics360\"}"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Compras"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 13
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.5.2",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              },
+              "editorMode": "code",
+              "expr": "irate(total_compras[$__rate_interval])",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Taxa de Compras em Tempo Real",
+          "type": "timeseries"
+        },
+        {
           "collapsed": true,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 13
+            "y": 20
           },
           "id": 8,
           "panels": [
@@ -390,7 +555,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 14
+            "y": 21
           },
           "id": 9,
           "panels": [
@@ -403,7 +568,7 @@ data:
                 "h": 3,
                 "w": 24,
                 "x": 0,
-                "y": 18
+                "y": 22
               },
               "id": 12,
               "options": {
@@ -429,7 +594,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 22
           },
           "id": 7,
           "panels": [
@@ -468,7 +633,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 16
+            "y": 23
           },
           "id": 6,
           "panels": [
