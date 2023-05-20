@@ -2,14 +2,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ include "histograma.fullname" . }}
+  name: {{ include "ShopMetrics360.fullname" . }}
   labels:
-    {{- include "histograma.labels" . | nindent 4 }}
+    {{- include "ShopMetrics360.labels" . | nindent 4 }}
     release: prometheus
 spec:
   selector:
     matchLabels:
-      {{- include "histograma.selectorLabels" . | nindent 6 }}
+      {{- include "ShopMetrics360.selectorLabels" . | nindent 6 }}
   endpoints:
   - port: "80"
     interval: 15s

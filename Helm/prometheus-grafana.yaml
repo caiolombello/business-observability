@@ -7,6 +7,24 @@ grafana:
   enabled: true
   defaultDashboardsEnabled: false
   adminPassword: Vertigo123
+  
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+
+      # ShopMetrics360
+      - name: shopmetrics360
+        orgId: 1
+        folder: 'ShopMetrics360'
+        type: file
+        options:
+          path: /var/lib/grafana/dashboards/shopmetrics360
+
+  dashboardsConfigMaps:
+
+    # ShopMetrics360
+    shopmetrics360: shopmetrics360-dashboard
 
 prometheusOperator:
   enabled: true
@@ -16,7 +34,7 @@ prometheus:
 
   prometheusSpec:
     additionalScrapeConfigs:
-      - job_name: "histograma"
+      - job_name: "shopmetrics360"
         static_configs:
-          - targets: ["histograma.default.svc.cluster.local"]  
+          - targets: ["shopmetrics360.default.svc.cluster.local"]  
 
